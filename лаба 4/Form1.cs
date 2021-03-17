@@ -16,6 +16,8 @@ namespace лаба_4
         {
             InitializeComponent();
         }
+        //Функция обработки получения координат XY события передвижения курсора по панели
+       
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -105,9 +107,26 @@ namespace лаба_4
 
     };
 
+
         private void Panel1_Paint(object sender, PaintEventArgs e)
         {
 
         }
+        //Функция обработки получения координат XY события передвижения курсора по панели
+        private void Panel1_MouseMove(object sender, MouseEventArgs e)
+        {
+            Coord_label.Text = "X: " + e.X + " Y: " + e.Y;
+        }
+        //Функция обработки события передвижения курсора по форме(очищение метки)
+        private void Form1_MouseMove(object sender, MouseEventArgs e)
+        {
+            Coord_label.Text = "";
+        }
+
+        //Инициализация необходимых переменных
+        static int amtCells = 1;
+        int CountElem = 0;
+        int item = 0;
+
     }
 }
