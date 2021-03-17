@@ -128,5 +128,10 @@ namespace лаба_4
         int CountElem = 0;
         int item = 0;
 
+        private void Form1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode==Keys.Delete)
+                //здесь д б удаление выделенных кругов
+        }
     }
 }
