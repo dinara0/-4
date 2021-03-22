@@ -15,17 +15,11 @@ namespace лаба_4
         public Form1()
         {
             InitializeComponent();
-        }
-        //Функция обработки получения координат XY события передвижения курсора по панели
-       
+        }            
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
         public class CCircle
         {
-            public int R = 75; //Задаем постоянный радиус
+            public int R = 50; //Задаем постоянный радиус
             public int x, y;
             public Color color = Color.Black; //Установка цвета по умолчанию
             public bool Is_Drawn = true; //Проверка на отрисовку окружности на панели
@@ -52,63 +46,26 @@ namespace лаба_4
     
         class Array  {
             public CCircle[] objects; // указатель на указатель объекта 
-            private int maxsize = 100;//размер массива максимальный
+            private int maxsize = 0;//размер массива максимальный
             private int size = 0; // размер массива
             public	Array(int size)
             {// конструктор 
-                //maxsize = size;
-                this.size = size;
+                maxsize = size;
                 objects = new CCircle[maxsize];// создаю массив из объектов
                 for (int i = 0; i < maxsize; ++i)
                     objects[i] = null;
 
             }
 
-            //Функция для выделения мест хранилища
-            /*public void Allocation(int amt)
+
+
+            public void set_value(ref CCircle value)//добавление объекта в хранилище
             {
-                objects = new CCircle[amt];
-                for (int i = 0; i < amt; ++i)
-                    objects[i] = null;
-            }
-
-            //Функция добавления объекта в хранилище 
-            public void set_value(int index, ref CCircle NewObj, ref int Count, ref int item)
-            {
-                Array NewStorage = new Array(Count + 1);
-                for (int i = 0; i < Count; ++i)
-                    NewStorage.objects[i] = objects[i];
-                for (int i = Count; i < (Count + 1) - 1; ++i)
-                {
-                    NewStorage.objects[i] = null;
-                }
-
-                Count = Count + 1;
-                Allocation(Count);
-                for (int i = 0; i < Count; ++i)
-                    objects[i] = NewStorage.objects[i];
-                objects[index] = NewObj;
-
-                item = index;
+                objects[size] = value;//добавляем объект в свободную ячейку
                 size++;
-            }*/
-
-            public void set_value( ref CCircle value)//добавление объекта в хранилище
-            {
-                /*
-                if (i < 0 || i >= maxsize)
-                {// если индекс выходит за размеры массива
-                //  printf("Выход за границы массива\n");
-                    return;
-                 }
-                 else if (i > size)
-                 {// если индекс больше нынещнего размера массива, но меньше максимального
-                  */  objects[size] = value;//добавляем объект в свободную ячейку
-                    size++;
-                    return;
-               /*  }
-                else objects[i] = value;// вставляем элемент вместо другого объекта*/
+                return;
             }
+             
             
             public CCircle get_value(int i)
             {
@@ -122,14 +79,13 @@ namespace лаба_4
             {
                 if (index < 0 || index >= size)
                 {//если выходим за нынешний размер массива
-                 //  printf("Выход за границы массива");
+                
                     return;
                 }
                 for (int i = index + 1, j = index; i < this.size; i++, j++)
                 {
-                    objects[j] = objects[i];//смещаем элементы, " затирая" элемент по индексу
+                    objects[j] = objects[i];//смещаем элементы, "затирая" элемент по индексу
                 }
-                // printf("объект из ячейки %i удален\n", index + 1);
                 this.size--;
             }
 
@@ -139,16 +95,6 @@ namespace лаба_4
                     return true;
                 else return false;
             }
-
-
-
-            //Деструктор
-            ~Array() { }
-
-
-
-
-
         };
 
 
@@ -164,10 +110,7 @@ namespace лаба_4
         }
 
         //Инициализация необходимых переменных
-        static int amtCells = 1;
-        int CountElem = 0;
-        int item = 0;
-        Array storage = new Array(amtCells);
+        Array storage = new Array(100);
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
@@ -189,15 +132,15 @@ namespace лаба_4
             
 
         }
-        private void DrawingCircles(ref Array storage, int CountElem)
+        private void DrawingCircles(ref Array storage, int index)
         {
             //Если ячейка хранилища не пуста, то..
-            if (storage.objects[CountElem] != null)
+            if (storage.objects[index] != null)
             {
                 //создаем ручку, отрисовываем окружность с указанными параметрами
-                Pen pen = new Pen(storage.objects[CountElem].color, 3);
-                panel1.CreateGraphics().DrawEllipse(pen, storage.objects[CountElem].x,
-                    storage.objects[CountElem].y, storage.objects[CountElem].R * 2, storage.objects[CountElem].R * 2);
+                Pen pen = new Pen(storage.objects[index].color, 3);
+                panel1.CreateGraphics().DrawEllipse(pen, storage.objects[index].x,
+                    storage.objects[index].y, storage.objects[index].R * 2, storage.objects[index].R * 2);
             }
         }
 
@@ -279,7 +222,7 @@ namespace лаба_4
                 return;
             }
             //Добавляем окружность в хранилище
-            //storage.set_value(CountElem, ref circle, ref amtCells, ref item);
+          
             storage.set_value(ref circle);
 
             //Снимаем выделение всех объектов хранилища
@@ -291,14 +234,12 @@ namespace лаба_4
             //Отрисовываем окружность
             DrawingCircles(ref storage, (storage.get_count()-1));
 
-            //Увеличиваем счетчик количества объектов хранилища
-            ++CountElem;
         }
 
         private void Clear_button_Click(object sender, EventArgs e)
         {
             panel1.Refresh(); //перерисовка
-            for (int i = 0; i < amtCells; ++i)
+            for (int i = 0; i < storage.get_count() - 1; ++i)
                 if (!storage.Empty(i))
                 {
                     storage.objects[i].Is_Drawn = false;
