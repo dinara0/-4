@@ -32,12 +32,13 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.Clear_button = new System.Windows.Forms.Button();
             this.ShowCircle_button = new System.Windows.Forms.Button();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // Coord_label
             // 
             this.Coord_label.AutoSize = true;
-            this.Coord_label.Location = new System.Drawing.Point(12, 311);
+            this.Coord_label.Location = new System.Drawing.Point(3, 9);
             this.Coord_label.Name = "Coord_label";
             this.Coord_label.Size = new System.Drawing.Size(94, 20);
             this.Coord_label.TabIndex = 1;
@@ -45,16 +46,17 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.Coord_label);
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(772, 293);
+            this.panel1.Size = new System.Drawing.Size(1056, 565);
             this.panel1.TabIndex = 0;
             this.panel1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Panel1_MouseDown);
             this.panel1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Panel1_MouseMove);
             // 
             // Clear_button
             // 
-            this.Clear_button.Location = new System.Drawing.Point(81, 334);
+            this.Clear_button.Location = new System.Drawing.Point(27, 571);
             this.Clear_button.Name = "Clear_button";
             this.Clear_button.Size = new System.Drawing.Size(125, 40);
             this.Clear_button.TabIndex = 2;
@@ -64,7 +66,7 @@
             // 
             // ShowCircle_button
             // 
-            this.ShowCircle_button.Location = new System.Drawing.Point(212, 334);
+            this.ShowCircle_button.Location = new System.Drawing.Point(168, 571);
             this.ShowCircle_button.Name = "ShowCircle_button";
             this.ShowCircle_button.Size = new System.Drawing.Size(158, 40);
             this.ShowCircle_button.TabIndex = 3;
@@ -76,18 +78,19 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1068, 635);
             this.Controls.Add(this.ShowCircle_button);
             this.Controls.Add(this.Clear_button);
-            this.Controls.Add(this.Coord_label);
             this.Controls.Add(this.panel1);
+            this.KeyPreview = true;
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseMove);
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
