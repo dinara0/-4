@@ -39,7 +39,6 @@ namespace лаба_4
                 this.color = color;
             }
 
-
             //Деструктор
             ~CCircle() { }
         }
@@ -97,24 +96,36 @@ namespace лаба_4
             }
         };
 
+        //Инициализация необходимых переменных
+        Array storage = new Array(100);
 
+        private void DrawingCircles(ref Array storage, int index)
+        {
+            //Если ячейка хранилища не пуста, то..
+            if (storage.objects[index] != null)
+            {
+                //создаем ручку, отрисовываем окружность с указанными параметрами
+                Pen pen = new Pen(storage.objects[index].color, 3);
+                panel1.CreateGraphics().DrawEllipse(pen, storage.objects[index].x,
+                    storage.objects[index].y, storage.objects[index].R * 2, storage.objects[index].R * 2);
+            }
+        }
         //Функция обработки получения координат XY события передвижения курсора по панели
         private void Panel1_MouseMove(object sender, MouseEventArgs e)
         {
             Coord_label.Text = "X: " + e.X + " Y: " + e.Y;
         }
+
         //Функция обработки события передвижения курсора по форме(очищение метки)
         private void Form1_MouseMove(object sender, MouseEventArgs e)
         {
             Coord_label.Text = "";
         }
 
-        //Инициализация необходимых переменных
-        Array storage = new Array(100);
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyData != Keys.Delete) return;
+            if (e.KeyData != Keys.Delete) return;// если клавиша - delete
 
             //Если объект существует и окрашен в цвет выбранных объектов,то происходит..
             if (storage.get_count() != 0)
@@ -132,17 +143,7 @@ namespace лаба_4
             
 
         }
-        private void DrawingCircles(ref Array storage, int index)
-        {
-            //Если ячейка хранилища не пуста, то..
-            if (storage.objects[index] != null)
-            {
-                //создаем ручку, отрисовываем окружность с указанными параметрами
-                Pen pen = new Pen(storage.objects[index].color, 3);
-                panel1.CreateGraphics().DrawEllipse(pen, storage.objects[index].x,
-                    storage.objects[index].y, storage.objects[index].R * 2, storage.objects[index].R * 2);
-            }
-        }
+
 
         //Функция, убирающая выделение объектов
         private void SelectionRemove(ref Array storage)
@@ -186,7 +187,7 @@ namespace лаба_4
                 //Если нажат ctrl, выделяем несколько объектов
                 if (Control.ModifierKeys == Keys.Control)
                 {
-                    int x = e.X - circle.R;
+                    int x = e.X - circle.R;// присваиваем координаты курсора
                     int y = e.Y - circle.R;
                     for (int i = 0; i < storage.get_count(); ++i)
                         if (!storage.Empty(i))
@@ -242,11 +243,12 @@ namespace лаба_4
             for (int i = 0; i < storage.get_count() - 1; ++i)
                 if (!storage.Empty(i))
                 {
-                    storage.objects[i].Is_Drawn = false;
-                    storage.objects[i].color = Color.Black;
+                    storage.objects[i].Is_Drawn = false; //значение отрисовки объекта= false
+                    storage.objects[i].color = Color.Black;//убираем выделение объекта
                 }
 
         }
+        
         //Обработчик события Click кнопки "Показать объекты хранилища" 
         private void ShowCircle_button_Click(object sender, EventArgs e)
         {
